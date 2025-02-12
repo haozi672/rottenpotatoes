@@ -13,5 +13,21 @@ more_movies = [
 ]
 
 more_movies.each do |movie|
-  Movie.create!(movie)
+  Movie.find_or_create_by(title: movie[:title]) do |m|
+    m.rating = movie[:rating]
+    m.release_date = movie[:release_date]
+  end
+end
+
+additional_movies = [
+  { title: "Inception", rating: "PG-13", release_date: "16-July-2010" },
+  { title: "The Dark Knight", rating: "PG-13", release_date: "18-July-2008" },
+  { title: "Interstellar", rating: "PG-13", release_date: "07-November-2014" }
+]
+  
+additional_movies.each do |movie|
+  Movie.find_or_create_by(title: movie[:title]) do |m|
+    m.rating = movie[:rating]
+    m.release_date = movie[:release_date]
+  end
 end
