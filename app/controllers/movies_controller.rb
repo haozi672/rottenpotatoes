@@ -3,7 +3,9 @@ class MoviesController < ApplicationController
 
   # GET /movies or /movies.json
   def index
-    @movies = Movie.all
+    sort_column = params[:sort] || "title"
+    sort_direction = params[:direction] || "asc"
+    @movies = Movie.order("#{sort_column} #{sort_direction}")
   end
 
   # GET /movies/1 or /movies/1.json
@@ -52,7 +54,7 @@ class MoviesController < ApplicationController
     @movie.destroy!
 
     respond_to do |format|
-      format.html { redirect_to movies_path, status: :see_other, notice: "Movie was successfully destroyed." }
+      format.html { redirect_to movies_url, status: :see_other, notice: "Movie was successfully destroyed." }
       format.json { head :no_content }
     end
   end
